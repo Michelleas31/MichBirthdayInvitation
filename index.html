@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michelle's 21st — Boarding Pass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Petit+Formal+Script&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Fondo: cielo nocturno con destellos -->
+  <div class="sky" id="sky"></div>
+
+  <!-- Botón de música -->
+  <button class="music-toggle" id="musicToggle" aria-label="Reproducir música">
+    <span id="musicIcon">♪</span>
+  </button>
+  <audio id="bgAudio" loop preload="none">
+    <source src="assets/audio/theme.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="stage">
+
+    <aside class="photo-collage collage-left" aria-hidden="true">
+      <figure class="polaroid rotate-a"><img src="assets/images/photo1.jpg" alt=""><figcaption>chapter 21</figcaption></figure>
+      <figure class="polaroid rotate-b"><img src="assets/images/photo2.jpg" alt=""><figcaption>worldwide legal</figcaption></figure>
+      <figure class="polaroid rotate-a"><img src="assets/images/photo3.jpg" alt=""><figcaption>world tour</figcaption></figure>
+    </aside>
+
+  <main class="scene">
+
+    <p class="eyebrow">— fasten your seatbelt, it's about to get legal... everywhere —</p>
+
+    <section class="ticket" id="ticket">
+
+      <!-- Encabezado tipo aerolínea -->
+      <div class="ticket-brand">
+        <span class="brand-mark">✈</span>
+        <span class="brand-name">MICHELLE AIRLINES</span>
+        <span class="brand-class">FIRST CLASS · WORLD TOUR</span>
+      </div>
+
+      <div class="ticket-main">
+
+        <h1 class="ticket-title">
+          <span class="script">now boarding for</span><br>
+          Michelle's 21 & Legal Everywhere<sup></sup>
+        </h1>
+
+        <div class="passenger-row">
+          <label for="guestName" class="field-label">passenger</label>
+          <input type="text" id="guestName" class="passenger-input" placeholder="ESCRIBE TU NOMBRE AQUÍ" maxlength="28">
+        </div>
+
+        <div class="ticket-grid">
+          <div class="field">
+            <span class="field-label">destination</span>
+            <span class="field-value">Legal Everywhere</span>
+          </div>
+          <div class="field">
+            <span class="field-label">gate</span>
+            <span class="field-value">Terraza Cocotero</span>
+          </div>
+          <div class="field">
+            <span class="field-label">date</span>
+            <span class="field-value">Vie · 28 Ago</span>
+          </div>
+          <div class="field">
+            <span class="field-label">boarding</span>
+            <span class="field-value">8:00 PM</span>
+          </div>
+          <div class="field">
+            <span class="field-label">departure</span>
+            <span class="field-value">Until 1 AM</span>
+          </div>
+          <div class="field">
+            <span class="field-label">seat</span>
+            <span class="field-value">Cualquier país ✈</span>
+          </div>
+        </div>
+
+        <div class="dresscode">
+          <span class="field-label">dress code — represent any country</span>
+          <p class="dresscode-text">Jersey · playera de selección · colores de bandera · sombrero · camisa hawaiana · boina francesa · kimono · cowboy · turista... lo que sea, mientras represente un país.</p>
+        </div>
+
+        <a class="cta-map" href="https://www.google.com/maps/search/?api=1&query=Terraza+Cocotero+Las+Alamedas+Zapopan+Jalisco" target="_blank" rel="noopener">
+          Abrir ubicación en Google Maps →
+        </a>
+
+        <a class="cta-playlist" href="#" target="_blank" rel="noopener" id="playlistLink">
+          Agrega tu canción a la playlist →
+        </a>
+
+      </div>
+
+      <!-- Perforación -->
+      <div class="perforation" aria-hidden="true"></div>
+
+      <!-- Talón del boleto -->
+      <div class="ticket-stub">
+        <div class="stub-seal" aria-hidden="true">
+          <svg viewBox="0 0 100 100" class="seal-svg">
+            <defs>
+              <path id="sealRing" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/>
+            </defs>
+            <circle cx="50" cy="50" r="47" class="seal-ring-outer"/>
+            <circle cx="50" cy="50" r="30" class="seal-ring-inner"/>
+            <text class="seal-text">
+              <textPath href="#sealRing" startOffset="0%">MICHELLE'S 21 & LEGAL EVERYWHERE ·</textPath>
+            </text>
+            <text x="50" y="57" class="seal-number">21</text>
+          </svg>
+        </div>
+        <div class="stub-text">
+          <span class="field-label">boarding number</span>
+          <span class="field-value stub-number">MX-021-1105</span>
+        </div>
+      </div>
+
+    </section>
+
+    <div class="passport-stamps" aria-hidden="true">
+      <span class="stamp">MX</span>
+      <span class="stamp">FR</span>
+      <span class="stamp">JP</span>
+      <span class="stamp">IT</span>
+      <span class="stamp">BR</span>
+      <span class="stamp">ES</span>
+      <span class="stamp">US</span>
+    </div>
+
+    <p class="footer-note">PD: si no vienes, quedas en mi lista negra — trae lo que quieras tomar.</p>
+
+  </main>
+
+    <aside class="photo-collage collage-right" aria-hidden="true">
+      <figure class="polaroid rotate-b"><img src="assets/images/photo4.jpg" alt=""><figcaption>21!!</figcaption></figure>
+      <figure class="polaroid rotate-a"><img src="assets/images/photo5.jpg" alt=""><figcaption>TGIF</figcaption></figure>
+      <figure class="polaroid rotate-b"><img src="assets/images/photo6.jpg" alt=""><figcaption>save the date</figcaption></figure>
+    </aside>
+
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,413 @@
+:root {
+  --black: #0d0b0a;
+  --black-2: #17130f;
+  --gold: #c9a962;
+  --gold-light: #e9d9ab;
+  --cream: #f6ecd9;
+  --pink: #f0a8c3;
+  --pink-deep: #d4779f;
+  --silver: #cfd3d8;
+  --line: rgba(201, 169, 98, 0.35);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--black);
+  color: var(--cream);
+  font-family: 'Space Mono', monospace;
+  overflow-x: hidden;
+}
+
+/* ---------- Fondo cielo con destellos ---------- */
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(201,169,98,0.08), transparent 55%),
+    radial-gradient(ellipse at 80% 70%, rgba(240,168,195,0.06), transparent 55%),
+    var(--black);
+  pointer-events: none;
+}
+.sky .glint {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--gold-light);
+  border-radius: 50%;
+  opacity: 0;
+  animation: twinkle 3.5s ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.8); }
+}
+
+/* ---------- Botón de música ---------- */
+.music-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 20;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: rgba(23, 19, 15, 0.8);
+  color: var(--gold-light);
+  font-size: 18px;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+.music-toggle:hover { transform: scale(1.08); border-color: var(--gold); }
+.music-toggle.playing { color: var(--pink); border-color: var(--pink-deep); }
+
+/* ---------- Stage (boleto + collage) ---------- */
+.stage {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 160px minmax(0, 640px) 160px;
+  justify-content: center;
+  gap: 24px;
+  padding: 64px 20px 80px;
+}
+
+/* ---------- Escena ---------- */
+.scene {
+  position: relative;
+  z-index: 1;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.8;
+  margin: 0 0 28px;
+  text-align: center;
+}
+
+/* ---------- Boleto ---------- */
+.ticket {
+  width: 100%;
+  background: linear-gradient(155deg, #1c1712, var(--black-2) 60%);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,169,98,0.06) inset;
+  opacity: 0;
+  transform: translateY(24px);
+  animation: rise 0.9s cubic-bezier(.2,.7,.3,1) 0.15s forwards;
+}
+@keyframes rise {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ticket-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 26px;
+  border-bottom: 1px dashed var(--line);
+}
+.brand-mark { color: var(--gold); font-size: 16px; transform: rotate(45deg); display: inline-block; }
+.brand-name {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--gold-light);
+}
+.brand-class {
+  margin-left: auto;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--pink);
+  opacity: 0.85;
+}
+
+.ticket-main { padding: 30px 26px 22px; }
+
+.ticket-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1.05;
+  margin: 0 0 26px;
+  color: var(--cream);
+}
+.ticket-title .script {
+  font-family: 'Petit Formal Script', cursive;
+  font-size: 22px;
+  color: var(--pink);
+  display: inline-block;
+  margin-bottom: 2px;
+}
+.ticket-title sup { font-size: 0.5em; color: var(--gold); }
+
+.field-label {
+  display: block;
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.75;
+  margin-bottom: 5px;
+}
+.field-value {
+  font-size: 14px;
+  color: var(--cream);
+  letter-spacing: 0.02em;
+}
+
+.passenger-row { margin-bottom: 22px; }
+.passenger-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  color: var(--gold-light);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 4px 2px 8px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.passenger-input::placeholder { color: rgba(246,236,217,0.35); font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.1em; }
+.passenger-input:focus { border-color: var(--pink); }
+
+.ticket-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px 14px;
+  padding: 18px 0;
+  border-top: 1px dashed var(--line);
+  border-bottom: 1px dashed var(--line);
+  margin-bottom: 20px;
+}
+
+.dresscode { margin-bottom: 22px; }
+.dresscode-text {
+  font-family: 'Space Mono', monospace;
+  font-size: 11.5px;
+  line-height: 1.7;
+  color: rgba(246,236,217,0.8);
+  margin: 6px 0 0;
+}
+
+.cta-map, .cta-playlist {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  padding: 13px 16px;
+  border-radius: 999px;
+  margin-top: 12px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.cta-map {
+  color: var(--black);
+  background: linear-gradient(120deg, var(--gold-light), var(--gold));
+  font-weight: 700;
+}
+.cta-playlist {
+  color: var(--pink);
+  border: 1px solid var(--pink-deep);
+  background: rgba(240,168,195,0.06);
+}
+.cta-map:hover, .cta-playlist:hover { transform: translateY(-2px); opacity: 0.92; }
+
+/* ---------- Perforación ---------- */
+.perforation {
+  position: relative;
+  height: 0;
+  border-top: 2px dashed var(--line);
+  margin: 0 0;
+}
+.perforation::before, .perforation::after {
+  content: "";
+  position: absolute;
+  top: -11px;
+  width: 22px;
+  height: 22px;
+  background: var(--black);
+  border-radius: 50%;
+}
+.perforation::before { left: -11px; }
+.perforation::after { right: -11px; }
+
+/* ---------- Talón ---------- */
+.ticket-stub {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 26px 26px;
+  gap: 16px;
+}
+
+.stub-seal { position: relative; width: 84px; height: 84px; flex-shrink: 0; }
+
+.seal-svg { width: 100%; height: 100%; overflow: visible; }
+.seal-ring-outer {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1;
+  opacity: 0.9;
+}
+.seal-ring-inner {
+  fill: none;
+  stroke: var(--pink-deep);
+  stroke-width: 0.75;
+  stroke-dasharray: 2.5 3;
+  opacity: 0.8;
+}
+.seal-text {
+  font-family: 'Space Mono', monospace;
+  font-size: 6.4px;
+  letter-spacing: 1.5px;
+  fill: var(--gold-light);
+}
+.seal-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 700;
+  fill: var(--cream);
+  text-anchor: middle;
+}
+
+.stub-text { text-align: right; }
+.stub-number { font-family: 'Space Mono', monospace; letter-spacing: 0.08em; }
+
+/* ---------- Sellos de pasaporte ---------- */
+.passport-stamps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 30px;
+  opacity: 0;
+  animation: fadeIn 1s ease 0.9s forwards;
+}
+@keyframes fadeIn { to { opacity: 1; } }
+
+.stamp {
+  width: 42px;
+  height: 42px;
+  border: 1.5px dashed var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--gold-light);
+  opacity: 0.7;
+}
+.stamp:nth-child(odd) { transform: rotate(-8deg); }
+.stamp:nth-child(even) { transform: rotate(7deg); border-color: var(--pink-deep); color: var(--pink); }
+
+/* ---------- Collage de fotos ---------- */
+.photo-collage {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-top: 40px;
+  opacity: 0;
+  animation: fadeIn 1.1s ease 0.5s forwards;
+}
+.collage-left { align-items: flex-end; }
+.collage-right { align-items: flex-start; }
+
+.polaroid {
+  margin: 0;
+  width: 130px;
+  background: var(--cream);
+  padding: 7px 7px 20px;
+  border-radius: 2px;
+  box-shadow: 0 16px 32px -12px rgba(0,0,0,0.65);
+  position: relative;
+}
+.polaroid.rotate-a { transform: rotate(-6deg); }
+.polaroid.rotate-b { transform: rotate(5deg); }
+.polaroid:hover { transform: rotate(0deg) scale(1.04); transition: transform 0.35s ease; z-index: 5; }
+
+.polaroid::before {
+  /* cinta washi */
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-4deg);
+  width: 46px;
+  height: 16px;
+  background: rgba(240,168,195,0.55);
+  border: 1px solid rgba(212,119,159,0.4);
+}
+
+.polaroid img {
+  display: block;
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  filter: grayscale(1) sepia(0.35) hue-rotate(-8deg) saturate(1.6) contrast(1.05) brightness(0.95);
+}
+
+.polaroid figcaption {
+  font-family: 'Petit Formal Script', cursive;
+  font-size: 13px;
+  color: var(--black-2);
+  text-align: center;
+  padding-top: 8px;
+  letter-spacing: 0.02em;
+}
+
+/* En pantallas medianas, el collage se vuelve una tira horizontal debajo del boleto */
+@media (max-width: 900px) {
+  .stage {
+    grid-template-columns: 1fr;
+    padding: 48px 16px 60px;
+  }
+  .photo-collage {
+    flex-direction: row;
+    overflow-x: auto;
+    align-items: flex-start !important;
+    padding: 10px 4px 6px;
+    gap: 18px;
+    order: 3;
+  }
+  .polaroid { flex: 0 0 auto; }
+}
+
+.footer-note {
+  margin-top: 30px;
+  font-size: 15px;
+  text-align: center;
+  color: rgba(246,236,217,0.55);
+  letter-spacing: 0.03em;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+  .ticket-title { font-size: 32px; }
+  .ticket-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001s !important; animation-iteration-count: 1 !important; }
+}
