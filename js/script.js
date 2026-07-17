@@ -169,7 +169,7 @@ btnDecline.addEventListener('click', () => {
   if (!name) return;
 
   declineStep = 1;
-  openModal('¿Estás segura y consciente de que quedarás en mi lista negra por siempre?');
+  openModal('¿Estás seguro y consciente de que quedarás en mi lista negra por siempre?');
 });
 
 function openModal(text) {
@@ -185,7 +185,7 @@ function closeModal() {
 modalPrimaryBtn.addEventListener('click', () => {
   if (declineStep === 1) {
     declineStep = 2;
-    openModal('Serás mi enemigo mortal 💀');
+    openModal('Serás mi enemigo mortal');
   } else if (declineStep === 2) {
     rsvpLocked = true;
     btnConfirm.disabled = true;
