@@ -102,6 +102,7 @@ html, body {
 
 /* ---------- Boleto ---------- */
 .ticket {
+  position: relative;
   width: 100%;
   background: linear-gradient(155deg, #1c1712, var(--black-2) 60%);
   border: 1px solid var(--line);
@@ -110,6 +111,7 @@ html, body {
   opacity: 0;
   transform: translateY(24px);
   animation: rise 0.9s cubic-bezier(.2,.7,.3,1) 0.15s forwards;
+  transition: filter 0.6s ease;
 }
 @keyframes rise {
   to { opacity: 1; transform: translateY(0); }
@@ -189,6 +191,20 @@ html, body {
 }
 .passenger-input::placeholder { color: rgba(246,236,217,0.35); font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.1em; }
 .passenger-input:focus { border-color: var(--pink); }
+.passenger-input:disabled { opacity: 0.6; }
+
+.name-warning {
+  color: var(--pink);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  margin: 8px 0 0;
+  animation: shake 0.4s ease;
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
 
 .ticket-grid {
   display: grid;
@@ -231,6 +247,84 @@ html, body {
   background: rgba(240,168,195,0.06);
 }
 .cta-map:hover, .cta-playlist:hover { transform: translateY(-2px); opacity: 0.92; }
+
+/* ---------- RSVP ---------- */
+.rsvp { margin-top: 22px; }
+.rsvp-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.rsvp-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  padding: 13px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.rsvp-btn:hover { transform: translateY(-2px); opacity: 0.92; }
+.rsvp-yes {
+  background: linear-gradient(120deg, var(--gold-light), var(--gold));
+  color: var(--black);
+  border: none;
+  font-weight: 700;
+}
+.rsvp-no {
+  background: transparent;
+  color: rgba(246,236,217,0.6);
+  border: 1px solid var(--line);
+}
+.rsvp-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+.confirmed-tag, .declined-tag {
+  margin-top: 22px;
+  text-align: center;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px dashed var(--line);
+  animation: fadeIn 0.6s ease forwards;
+}
+.stamp-confirmed-label {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  color: var(--gold-light);
+  border: 1.5px solid var(--gold);
+  padding: 5px 14px;
+  border-radius: 999px;
+  transform: rotate(-2deg);
+}
+.confirmed-tag p, .declined-tag p {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: rgba(246,236,217,0.75);
+}
+
+/* ---------- Ticket "impreso" tras confirmar ---------- */
+.ticket.is-printed {
+  filter: sepia(0.14) contrast(1.02) saturate(0.92);
+}
+.ticket.is-printed::after {
+  content: "CONFIRMADO ✓";
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: linear-gradient(120deg, var(--pink), var(--pink-deep));
+  color: #201013;
+  padding: 6px 14px;
+  border-radius: 4px;
+  transform: rotate(7deg);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+  z-index: 5;
+}
 
 /* ---------- Perforación ---------- */
 .perforation {
@@ -348,7 +442,6 @@ html, body {
 .polaroid:hover { transform: rotate(0deg) scale(1.04); transition: transform 0.35s ease; z-index: 5; }
 
 .polaroid::before {
-  /* cinta washi */
   content: "";
   position: absolute;
   top: -10px;
@@ -377,7 +470,6 @@ html, body {
   letter-spacing: 0.02em;
 }
 
-/* En pantallas medianas, el collage se vuelve una tira horizontal debajo del boleto */
 @media (max-width: 900px) {
   .stage {
     grid-template-columns: 1fr;
@@ -414,10 +506,106 @@ html, body {
   letter-spacing: 0.03em;
 }
 
+/* ---------- Modal (flujo "no podré ir") ---------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(13, 11, 10, 0.86);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeIn 0.25s ease forwards;
+}
+.modal-box {
+  max-width: 380px;
+  width: 100%;
+  background: linear-gradient(155deg, #1c1712, var(--black-2) 60%);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 30px 26px;
+  text-align: center;
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8);
+  transform: scale(0.94);
+  animation: modalPop 0.3s cubic-bezier(.2,.8,.3,1) forwards;
+}
+@keyframes modalPop { to { transform: scale(1); } }
+.modal-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--cream);
+  line-height: 1.35;
+  margin: 0 0 22px;
+}
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.modal-btn-primary {
+  background: linear-gradient(120deg, var(--pink), var(--pink-deep));
+  color: #201013;
+  border: none;
+  font-weight: 700;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  padding: 13px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.modal-btn-secondary {
+  background: transparent;
+  color: rgba(246,236,217,0.6);
+  border: 1px solid var(--line);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  padding: 11px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.modal-btn-primary:hover, .modal-btn-secondary:hover { opacity: 0.9; }
+
+/* ---------- Video de confirmación ---------- */
+.video-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease forwards;
+}
+.video-overlay video {
+  max-width: 100%;
+  max-height: 100%;
+}
+.video-skip {
+  position: absolute;
+  bottom: 26px;
+  right: 26px;
+  background: rgba(23,19,15,0.7);
+  color: var(--gold-light);
+  border: 1px solid var(--line);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  padding: 10px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+}
+.video-skip:hover { opacity: 0.85; }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 480px) {
   .ticket-title { font-size: 32px; }
   .ticket-grid { grid-template-columns: repeat(2, 1fr); }
+  .rsvp-buttons { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {

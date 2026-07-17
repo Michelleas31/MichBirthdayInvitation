@@ -53,6 +53,7 @@
         <div class="passenger-row">
           <label for="guestName" class="field-label">passenger</label>
           <input type="text" id="guestName" class="passenger-input" placeholder="ESCRIBE TU NOMBRE AQUÍ" maxlength="28">
+          <p class="name-warning" id="nameWarning" hidden>escribe tu nombre antes de continuar ✍️</p>
         </div>
 
         <div class="ticket-grid">
@@ -94,6 +95,23 @@
         <a class="cta-playlist" href="#" target="_blank" rel="noopener" id="playlistLink">
           Agrega tu canción a la playlist →
         </a>
+
+        <!-- RSVP -->
+        <div class="rsvp" id="rsvpBlock">
+          <div class="rsvp-buttons">
+            <button type="button" class="rsvp-btn rsvp-yes" id="btnConfirm">✅ Confirmo mi asistencia</button>
+            <button type="button" class="rsvp-btn rsvp-no" id="btnDecline">✗ No podré ir</button>
+          </div>
+        </div>
+
+        <div class="confirmed-tag" id="confirmedTag" hidden>
+          <span class="stamp-confirmed-label">✓ CONFIRMADO</span>
+          <p>Nos vemos el 28 de agosto — ¡guarda tu boleto! 🎟️</p>
+        </div>
+
+        <div class="declined-tag" id="declinedTag" hidden>
+          <p>Quedó registrado 🖤 la puerta de embarque estará cerrada para ti.</p>
+        </div>
 
       </div>
 
@@ -143,6 +161,25 @@
       <figure class="polaroid rotate-b"><img src="assets/images/photo6.jpg" alt=""><figcaption>save the date</figcaption></figure>
     </aside>
 
+  </div>
+
+  <!-- Modal para el flujo de "no podré ir" -->
+  <div class="modal-overlay" id="modalOverlay" hidden>
+    <div class="modal-box" id="modalBox">
+      <p class="modal-text" id="modalText"></p>
+      <div class="modal-actions">
+        <button class="modal-btn-primary" id="modalPrimaryBtn">OK</button>
+        <button class="modal-btn-secondary" id="modalSecondaryBtn">mejor no, sí voy 👀</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Video de confirmación -->
+  <div class="video-overlay" id="videoOverlay" hidden>
+    <video id="confirmVideo" playsinline webkit-playsinline>
+      <source src="assets/video/confirm.mp4" type="video/mp4">
+    </video>
+    <button class="video-skip" id="videoSkipBtn">saltar ▶</button>
   </div>
 
   <script src="js/script.js"></script>
